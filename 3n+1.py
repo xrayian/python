@@ -1,20 +1,17 @@
-import time
+from datetime import datetime
 
 incarnations:int = 0
 highest:int = 0
-starting_time:float = 0.0
+starting_time = datetime.now()
 
-def startTimer():
-    global starting_time
-    starting_time = time.time()
 
-def endTimer():
+def getDuration():
     global starting_time
-    return (time.time() - starting_time)
+    return (datetime.now() - starting_time)
 
 def resetTimer():
     global starting_time
-    starting_time = 0.0
+    starting_time = datetime.now()
 
 
 def conjecture(num:int):
@@ -40,15 +37,15 @@ def conjecture(num:int):
         #     highest = new_num
         return new_num
     else:
-        print(f"-----\nCollatz conjecture encountered after {incarnations} attempts [highest: {highest}, took [{endTimer()}s]]\n")
+        print(f"-----\nCollatz conjecture encountered after {incarnations} attempts [highest: {highest}, took {getDuration()}s]\n")
         incarnations = 0
         highest = 0
-        resetTimer()
         return "halt"
 
 
 
 def main_loop(output_value): #initial input is also called output_value for lack of coffee
+    resetTimer()
     print("-----")
     while True:
         if (output_value == "halt"):
