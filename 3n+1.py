@@ -37,7 +37,7 @@ def conjecture(num:int):
         #     highest = new_num
         return new_num
     else:
-        print(f"-----\nCollatz conjecture encountered after {incarnations} attempts [highest: {highest}, took {getDuration()}s]\n")
+        print(f"\n-----\n\nCollatz conjecture encountered after {incarnations - 3 if incarnations > 3 else 0} attempts!\nExecution time: {getDuration()}s\nHighest: {highest}\n")
         incarnations = 0
         highest = 0
         return "halt"
@@ -46,7 +46,7 @@ def conjecture(num:int):
 
 def main_loop(output_value): #initial input is also called output_value for lack of coffee
     resetTimer()
-    print("-----")
+    print("-----\n")
     while True:
         if (output_value == "halt"):
             break
