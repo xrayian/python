@@ -1,4 +1,6 @@
 from datetime import datetime
+from colorama import Fore, init, Style
+init(autoreset=True)
 
 attempt_count: int = 0
 highest: int = 0
@@ -28,10 +30,10 @@ def conjecture(num: int):
         highest = num
 
     if (num % 2 != 0):  # if Odd
-        print(int(num))
+        print(Fore.GREEN + str(int(num)))
         new_num: int = (3 * num) + 1
     else:
-        print(int(num))
+        print(Fore.BLUE + str(int(num)))
         new_num: int = (num // 2)
 
     if (num != 1.0):
@@ -42,11 +44,11 @@ def conjecture(num: int):
         print(f"""
 -----
 
-Collatz conjecture encountered after {attempt_count - 3 if attempt_count > 3 else 0} attempts!
-Execution time: {getDuration()}
-Seed: {seed_value}
-Highest: {highest}
-Increased: {highest - seed_value}
+Collatz conjecture encountered after {Fore.MAGENTA }{attempt_count - 3 if attempt_count > 3 else 0}{Style.RESET_ALL} attempts! 
+Execution time: {Fore.CYAN}{getDuration()}{Style.RESET_ALL}
+Seed: {Fore.RED}{seed_value}{Style.RESET_ALL}
+Highest: {Fore.YELLOW}{highest}{Style.RESET_ALL}
+Increased: {Fore.BLUE}{highest - seed_value}{Style.RESET_ALL}
 
         """)
         attempt_count = 0
@@ -66,5 +68,5 @@ def main_loop(output_value):  # initial input is also called output_value for la
 
 
 while True:
-    seed_value = int(input("Enter a number [except 1]: "))
+    seed_value = int(input("Enter seed number [except 1]: "))
     main_loop(seed_value)
