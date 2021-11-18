@@ -62,7 +62,7 @@ def conjecture(num: int):
 -----
 
 Collatz conjecture encountered after {Fore.MAGENTA }{attempt_count - 3 if attempt_count > 3 else 0}{Style.RESET_ALL} attempts! 
-Execution time: {Fore.CYAN}{getDuration()}{Style.RESET_ALL} { "" if SLOW_PRINT and PRINT_NUMBERS else "FAST MODE"}
+Execution time: {Fore.CYAN}{getDuration()}{Style.RESET_ALL} { "" if (PRINT_NUMBERS) else "FAST MODE"}
 Seed {Fore.CYAN}[{len(str(seed_value))}]{Style.RESET_ALL}: {Fore.RED}{seed_value}{Style.RESET_ALL}
 Highest {Fore.CYAN}[{len(str(highest))}]{Style.RESET_ALL}: {Fore.YELLOW}{highest}{Style.RESET_ALL}
 Increased {Fore.CYAN}[{len(str(highest - seed_value))}]{Style.RESET_ALL}: {Fore.BLUE}{highest - seed_value}{Style.RESET_ALL}
