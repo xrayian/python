@@ -24,6 +24,15 @@ def resetTimer():
     global starting_time
     starting_time = datetime.now()
 
+def reset():
+    global attempt_count
+    global highest
+    global seed_value
+
+    attempt_count = 0
+    highest = 0
+    seed_value = 0
+
 
 def conjecture(num: int):
 
@@ -67,10 +76,7 @@ Highest {Fore.CYAN}[{len(str(highest))}]{Style.RESET_ALL}: {Fore.YELLOW}{highest
 Increased {Fore.CYAN}[{len(str(highest - seed_value))}]{Style.RESET_ALL}: {Fore.BLUE}{highest - seed_value}{Style.RESET_ALL}
 
         """)
-        attempt_count = 0
-        highest = 0
-        seed_value = 0
-
+        reset()
         return "halt"
 
 
@@ -91,9 +97,10 @@ def read_file(file_name):
         for seed in file.readlines():
             try:
                 seed_value = int(seed)
+                if print_numbers: print(f"{Fore.LIGHTYELLOW_EX}Seed: {seed_value}{Style.RESET_ALL}")
                 main_loop(seed_value)
             except ValueError:
-                print(f"{Fore.RED}Invalid Seed: {seed}\nEnter a proper whole integer{Style.RESET_ALL}")
+                print(f"{Fore.RED}Invalid Seed: {seed}{Style.RESET_ALL}\n")
         exit()
 
     except OSError as err:
@@ -120,12 +127,12 @@ try:
 except getopt.error as err:
     print (str(err))
 
-
-while True:
-    seed_value = input("Enter seed number: ")
-    try:
-        seed_value = int(seed_value)
-        main_loop(seed_value)
-    except:
-        print(f"{Fore.RED}Invalid Seed! Enter a proper whole integer{Style.RESET_ALL}")
+if __name__ == "__main__":
+    while True:
+        seed_value = input("Enter seed number: ")
+        try:
+            seed_value = int(seed_value)
+            main_loop(seed_value)
+        except:
+            print(f"{Fore.RED}Invalid Seed! Enter a proper whole integer{Style.RESET_ALL}")
     
