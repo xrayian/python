@@ -58,9 +58,8 @@ def conjecture(num: int):
         return new_num
 
     else:
+        if print_numbers: print("-----\n")
         print(f"""
------
-
 Collatz conjecture encountered after {Fore.MAGENTA }{attempt_count - 3 if attempt_count > 3 else 0}{Style.RESET_ALL} attempts! 
 Execution time: {Fore.CYAN}{getDuration()}{Style.RESET_ALL} { "" if (print_numbers) else "FAST MODE"}
 Seed {Fore.CYAN}[{len(str(seed_value))}]{Style.RESET_ALL}: {Fore.RED}{seed_value}{Style.RESET_ALL}
@@ -77,7 +76,7 @@ Increased {Fore.CYAN}[{len(str(highest - seed_value))}]{Style.RESET_ALL}: {Fore.
 
 def main_loop(output_value):  # initial input is also called output_value for lack of coffee
     resetTimer()
-    print("-----\n")
+    if print_numbers: print("-----\n")
     while True:
         if (output_value == "halt"):
             break
@@ -85,9 +84,18 @@ def main_loop(output_value):  # initial input is also called output_value for la
 
 
 def read_file(file_name):
+    global seed_value
+
     try:
         file = open(file_name)
-        main_loop(int(file.readlines()[0]))
+        for seed in file.readlines():
+            try:
+                seed_value = int(seed)
+                main_loop(seed_value)
+            except ValueError:
+                print(f"{Fore.RED}Invalid Seed: {seed}\nEnter a proper whole integer{Style.RESET_ALL}")
+        exit()
+
     except OSError as err:
         print(str(err))
         exit()
