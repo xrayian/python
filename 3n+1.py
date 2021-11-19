@@ -1,7 +1,34 @@
 from datetime import datetime
 from time import sleep
+import sys, getopt
 from colorama import Fore, init, Style
 init(autoreset=True)
+
+print_numbers: bool = True
+slow_print: bool = False
+
+
+argumentList = sys.argv[1:]
+options = "fsr:"
+long_options = ["fast", "slow","read="]
+try:
+    arguments, values = getopt.getopt(argumentList, options, long_options)
+    for currentArgument, currentValue in arguments:
+        if currentArgument in ("-f", "--fast"):
+            print ("FAST MODE\n\n")
+            print_numbers: bool = False
+
+        if currentArgument in ("-s", "--slow"):
+            print ("SLOW MODE\n\n")
+            slow_print: bool = True
+
+        if currentArgument in ("-r", "--read"):
+            print(currentValue) #in work
+
+except getopt.error as err:
+    print (str(err))
+
+
 
 
 # GLOBAL SWITCHES
@@ -11,8 +38,6 @@ highest: int = 0
 seed_value: int = 0
 starting_time = datetime.now()
 
-PRINT_NUMBERS: bool = True  # Recommended to set false when testing huge numbers
-SLOW_PRINT: bool = False
 
 
 def getDuration():
@@ -32,7 +57,7 @@ def conjecture(num: int):
     global seed_value
 
     attempt_count = attempt_count + 1
-    if(PRINT_NUMBERS and SLOW_PRINT):
+    if(print_numbers and slow_print):
         sleep(0.1)
 
     if (num > highest):
@@ -40,13 +65,13 @@ def conjecture(num: int):
 
     if (num % 2 != 0):  # if Odd
 
-        if (PRINT_NUMBERS):
+        if (print_numbers):
             print(Fore.CYAN + str(int(num)) + Style.RESET_ALL)
 
         new_num: int = (3 * num) + 1
     else:
 
-        if(PRINT_NUMBERS):
+        if(print_numbers):
             print(Fore.BLUE + str(int(num)) + Style.RESET_ALL)
 
         new_num: int = (num // 2)
@@ -62,7 +87,7 @@ def conjecture(num: int):
 -----
 
 Collatz conjecture encountered after {Fore.MAGENTA }{attempt_count - 3 if attempt_count > 3 else 0}{Style.RESET_ALL} attempts! 
-Execution time: {Fore.CYAN}{getDuration()}{Style.RESET_ALL} { "" if (PRINT_NUMBERS) else "FAST MODE"}
+Execution time: {Fore.CYAN}{getDuration()}{Style.RESET_ALL} { "" if (print_numbers) else "FAST MODE"}
 Seed {Fore.CYAN}[{len(str(seed_value))}]{Style.RESET_ALL}: {Fore.RED}{seed_value}{Style.RESET_ALL}
 Highest {Fore.CYAN}[{len(str(highest))}]{Style.RESET_ALL}: {Fore.YELLOW}{highest}{Style.RESET_ALL}
 Increased {Fore.CYAN}[{len(str(highest - seed_value))}]{Style.RESET_ALL}: {Fore.BLUE}{highest - seed_value}{Style.RESET_ALL}
@@ -85,5 +110,10 @@ def main_loop(output_value):  # initial input is also called output_value for la
 
 
 while True:
-    seed_value = int(input("Enter seed number [except 1]: "))
-    main_loop(seed_value)
+    seed_value = input("Enter seed number: ")
+    try:
+        seed_value = int(seed_value)
+        main_loop(seed_value)
+    except:
+        print(f"{Fore.RED}Invalid Seed! Enter a proper whole integer{Style.RESET_ALL}")
+    
