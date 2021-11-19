@@ -5,6 +5,7 @@ from colorama import Fore, init, Style
 init(autoreset=True)
 
 print_numbers: bool = True
+# print_dots: bool = False
 slow_print: bool = False
 
 
@@ -14,6 +15,16 @@ attempt_count: int = 0
 highest: int = 0
 seed_value: int = 0
 starting_time = datetime.now()
+
+def slowMode(fast_mode: bool = True):
+    global print_numbers
+    print_numbers = fast_mode
+
+# def ballMode(ball_mode: bool = False):
+#     global print_dots
+    
+#     print_dots = ball_mode
+
 
 def getDuration():
     global starting_time
@@ -81,6 +92,8 @@ Increased {Fore.CYAN}[{len(str(highest - seed_value))}]{Style.RESET_ALL}: {Fore.
 
 
 def main_loop(output_value):  # initial input is also called output_value for lack of coffee
+    global seed_value
+    seed_value = output_value
     resetTimer()
     if print_numbers: print("-----\n")
     while True:
@@ -114,8 +127,8 @@ try:
     arguments, values = getopt.getopt(argumentList, options, long_options)
     for currentArgument, currentValue in arguments:
         if currentArgument in ("-f", "--fast"):
-            print ("FAST MODE\n\n")
-            print_numbers: bool = False
+            print ("FAST MODE\n")
+            slowMode(False)
 
         if currentArgument in ("-s", "--slow"):
             print ("SLOW MODE\n\n")

@@ -1,0 +1,3 @@
+small numbers all which reach out to top goes to 9232!
+
+seeds to go to 9232 - 54,55,71,73,82,83,91,94,95,97,103,107,...,411,412,413,414,415,417
