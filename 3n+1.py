@@ -8,37 +8,12 @@ print_numbers: bool = True
 slow_print: bool = False
 
 
-argumentList = sys.argv[1:]
-options = "fsr:"
-long_options = ["fast", "slow","read="]
-try:
-    arguments, values = getopt.getopt(argumentList, options, long_options)
-    for currentArgument, currentValue in arguments:
-        if currentArgument in ("-f", "--fast"):
-            print ("FAST MODE\n\n")
-            print_numbers: bool = False
-
-        if currentArgument in ("-s", "--slow"):
-            print ("SLOW MODE\n\n")
-            slow_print: bool = True
-
-        if currentArgument in ("-r", "--read"):
-            print(currentValue) #in work
-
-except getopt.error as err:
-    print (str(err))
-
-
-
-
 # GLOBAL SWITCHES
 
 attempt_count: int = 0
 highest: int = 0
 seed_value: int = 0
 starting_time = datetime.now()
-
-
 
 def getDuration():
     global starting_time
@@ -107,6 +82,35 @@ def main_loop(output_value):  # initial input is also called output_value for la
         if (output_value == "halt"):
             break
         output_value = conjecture(output_value)
+
+
+def read_file(file_name):
+    try:
+        file = open(file_name)
+        main_loop(int(file.readlines()[0]))
+    except OSError as err:
+        print(str(err))
+        exit()
+
+argumentList = sys.argv[1:]
+options = "fsr:"
+long_options = ["fast", "slow","read="]
+try:
+    arguments, values = getopt.getopt(argumentList, options, long_options)
+    for currentArgument, currentValue in arguments:
+        if currentArgument in ("-f", "--fast"):
+            print ("FAST MODE\n\n")
+            print_numbers: bool = False
+
+        if currentArgument in ("-s", "--slow"):
+            print ("SLOW MODE\n\n")
+            slow_print: bool = True
+
+        if currentArgument in ("-r", "--read"):
+            read_file(currentValue)
+
+except getopt.error as err:
+    print (str(err))
 
 
 while True:
