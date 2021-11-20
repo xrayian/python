@@ -1,10 +1,11 @@
-import core, time
+from core import print_outputs, main_loop
+from time import sleep
 
-core.slowMode(False)
-inf_seed = 9232
+print_outputs(False)
+inf_seed = 1 #9232 #test
 while True:
-    time.sleep(0.8)
-    core.main_loop(inf_seed)
+    sleep(0.8)
+    main_loop(inf_seed)
     inf_seed = inf_seed + 1
 
 
